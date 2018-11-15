@@ -21,8 +21,10 @@ export default class Weather extends Component {
   }
 
   getWeatherData(city) {
+    // I could've used the city ID but I wanted to have room for the user to
+    // Use different cities.  For now it just supports Phoenix.
     fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${city.toLowerCase()},us&units=imperial&APPID=2b07eb79e75f25c3f2d9b46b33061a82`
+      `http://api.openweathermap.org/data/2.5/weather?q=${city.toLowerCase()},us&units=imperial&APPID=${process.env.WEATHER_API_KEY}`
     )
       .then(response => response.json())
       .then(json => {

@@ -37,7 +37,8 @@ module.exports = {
   },
   plugins: [
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'production'
+      NODE_ENV: 'production',
+      WEATHER_API_KEY: '2b07eb79e75f25c3f2d9b46b33061a82'
     })
   ]
 };
