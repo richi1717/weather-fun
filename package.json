@@ -1,7 +1,7 @@
 {
-  "name": "demo",
+  "name": "Weather Fun",
   "version": "0.0.0",
-  "description": "weather fun",
+  "description": "weather app react",
   "main": "index.js",
   "scripts": {
     "dev": "node app.js",
