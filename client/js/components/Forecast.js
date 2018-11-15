@@ -41,12 +41,17 @@ export default class Forecast extends Component {
     // I could've used the city ID but I wanted to have room for the user to
     // Use different cities.  For now it just supports Phoenix.
     fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?q=${city.toLowerCase()},us&units=imperial&APPID=${process.env.WEATHER_API_KEY}`
+      `http://api.openweathermap.org/data/2.5/forecast?q=${city.toLowerCase()},us&units=imperial&APPID=${
+        process.env.WEATHER_API_KEY
+      }`
     )
       .then(response => response.json())
       .then(json => {
         window.showMe = json;
-        const formattedDate = json.list[0].dt_txt.replace(/\ \d{2}:\d{2}:\d{2}/, '');
+        const formattedDate = json.list[0].dt_txt.replace(
+          /\ \d{2}:\d{2}:\d{2}/,
+          ''
+        );
         this.setState({
           day: this.dayOfTheWeek[new Date(formattedDate).getDay()],
           organizedData: this.createDaysOfData(json.list),
@@ -81,12 +86,16 @@ export default class Forecast extends Component {
   };
 
   createDaysOfData(list) {
-    let date = this.dayOfTheWeek[new Date(list[0].dt_txt.replace(/\ \d{2}:\d{2}:\d{2}/, '')).getDay()];
+    let date = this.dayOfTheWeek[
+      new Date(list[0].dt_txt.replace(/ \d{2}:\d{2}:\d{2}/, '')).getDay()
+    ];
     const obj = {
       [date]: []
     };
     list.forEach(item => {
-      const currentDay = this.dayOfTheWeek[new Date(item.dt_txt.replace(/\ \d{2}:\d{2}:\d{2}/, '')).getDay()];
+      const currentDay = this.dayOfTheWeek[
+        new Date(item.dt_txt.replace(/ \d{2}:\d{2}:\d{2}/, '')).getDay()
+      ];
       if (currentDay === date) {
         obj[currentDay].push(item);
       } else {
@@ -152,13 +161,8 @@ export default class Forecast extends Component {
       } = data;
       const { main: weatherMain, icon } = weather[0];
 
-      // Figure out how to use dt_txt as a regex
-      // console.log(dt_txt);
-      // const time = new Date(dt_txt)
-      //   .toLocaleTimeString('en-US')
-      //   .replace(/:00:00 /, '');
       const time = this.hourConversion[
-        dt_txt.replace(/\d{4}-(\d{2})-\d{2}\ /, '').replace(/:00:00/, '')
+        dt_txt.replace(/\d{4}-(\d{2})-\d{2} /, '').replace(/:00:00/, '')
       ];
       return (
         <div key={`content-${idx}`} className="individual-day-display">
