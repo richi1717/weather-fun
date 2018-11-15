@@ -141,20 +141,25 @@ export default class Forecast extends Component {
       const time = new Date(dt_txt)
         .toLocaleTimeString('en-US')
         .replace(/:00:00 /, '');
-      console.log(time, 'here is the time');
       return (
-        <div key={`content-${idx}`} className="individual-day-display">
-          <h3>{time}</h3>
-          <img
-            src={`http://openweathermap.org/img/w/${icon}.png`}
-            alt={`${weatherMain} weather icon`}
-          />
-          <p>
-            {Forecast.formatNumbers(temp)}
-            <sup>°</sup>
-          </p>
-        </div>
-      );
+        <div>Here is the issue: {time}
+        OR: {dt_txt},
+        OR: {new Date(dt_txt)}
+        OR: {new Date(dt_txt).toLocaleTimeString('en-US')}</div>
+      )
+      // return (
+      //   <div key={`content-${idx}`} className="individual-day-display">
+      //     <h3>{time}</h3>
+      //     <img
+      //       src={`http://openweathermap.org/img/w/${icon}.png`}
+      //       alt={`${weatherMain} weather icon`}
+      //     />
+      //     <p>
+      //       {Forecast.formatNumbers(temp)}
+      //       <sup>°</sup>
+      //     </p>
+      //   </div>
+      // );
     });
   }
 
