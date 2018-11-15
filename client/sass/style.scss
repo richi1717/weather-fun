@@ -1,0 +1,387 @@
+// Variables
+$white: rgb(247, 247, 247);
+$gray-transparent: rgba(13, 34, 47, 0.55);
+$green: #093c27;
+$light-green: #58795e;
+$light-green-transparent: rgba(127, 181, 161, 0.7);
+$dark-transparent-blue: rgba(6, 67, 44, 0.36);
+$dark-transparent-blue-darker: rgba(6, 67, 44, 0.57);
+$dark-gray-transparent: rgba(13, 34, 47, 0.17);
+$transparent-black: rgba(54, 62, 58, 0.7);
+$transparent-black-darker: rgba(0, 0, 0, .44);
+$light-white: #c6c7cc;
+$almost-black: #0f0e25;
+$blue-dark: #1e302c;
+$blue-dark-transparent: rgba(39, 71, 91, 0.77);
+$blue-dark-transparent-darker: rgba(27, 44, 56, 0.81);
+$gray-darker-transparent: rgba(51, 66, 76, 0.77);
+$almost-black-transparent: rgba(26, 34, 39, 0.77);
+$gray-flat-transparent: rgba(98, 116, 128, 0.55);
+$off-white: #807c7c;
+$font-default: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+$breakpoints-phone: 500px;
+$breakpoints-tablet: 768px;
+$breakpoints-desktop: 1024px;
+$font-size: 16px;
+$font-weight-normal: 300;
+
+// Styles
+[class^="hyrule"] {
+  font-family: $font-default;
+  position: relative;
+  color: $white;
+  width: 100%;
+  margin: 0;
+
+  &:after {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: .8;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: -1;
+
+    @media screen and (max-width: $breakpoints-phone) {
+      background-size: cover;
+    }
+  }
+
+  .main-container {
+    display: flex;
+    width: 100%;
+    margin-top: 40px;
+    justify-content: center;
+
+    @media screen and (max-width: $breakpoints-phone) {
+      align-items: baseline;
+      height: 90%;
+      font-size: 28px;
+    }
+
+    main {
+      display: flex;
+      width: 100%;
+
+      @media screen and (max-width: $breakpoints-phone) {
+        .weather-main-container {
+          padding: 20px 40px;
+        }
+      }
+
+      @media screen and (min-width: $breakpoints-phone) {
+        width: 900px;
+
+        &.today-weather {
+          justify-content: center;
+          font-size: 28px;
+        }
+      }
+    }
+
+    .header-container {
+      width: 100%;
+      display: flex;
+      z-index: 1100;
+      box-sizing: border-box;
+      flex-shrink: 0;
+      flex-direction: column;
+      top: 0;
+      left: auto;
+      right: 0;
+      position: fixed;
+
+      .header-button-wrapper {
+        justify-content: flex-end;
+
+        @media screen and (max-width: $breakpoints-phone) {
+          justify-content: center;
+        }
+      }
+    }
+
+    .forecast-wrapper {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 60px;
+
+      .hourly-forecast-container {
+        display: flex;
+        justify-content: space-between;
+
+        @media screen and (max-width: $breakpoints-phone) {
+          border-top: 1px solid $white;
+          border-bottom: 1px solid $white;
+          width: 100%;
+          overflow: scroll;
+          align-self: center;
+          margin-bottom: 40px;
+        }
+
+        .individual-day-display {
+          color: $white;
+          font-size: 14pt;
+
+          img {
+            width: 70px;
+            height: 70px;
+          }
+
+          @media screen and (max-width: $breakpoints-phone) {
+            font-size: 10pt;
+            padding: 0 10px;
+
+            img {
+              width: 35px;
+              height: 35px;
+            }
+
+            .description-weather {
+              display: none;
+            }
+          }
+        }
+      }
+
+      @media screen and (max-width: $breakpoints-phone) {
+        flex-direction: column;
+        padding: 0;
+
+        .forecast-day-header {
+          display: none;
+        }
+      }
+
+      .day-button-card {
+        color: $white;
+        border: none;
+        font-size: 14pt;
+        background: none;
+
+        @media screen and (min-width: $breakpoints-phone) {
+          flex: 1;
+          background: $dark-gray-transparent;
+
+          &:first-child {
+            border-radius: 5px 0 0 5px;
+          }
+
+          &:last-child {
+            border-radius: 0 5px 5px 0;
+          }
+
+          &:hover {
+            background-color: $gray-transparent;
+            flex: 1.5;
+            margin: -20px 0;
+            font-size: 16pt;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+
+    .header-buttons {
+      font-size: 14px;
+      background: none;
+      border: none;
+      color: white;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+
+      @media screen and (max-width: $breakpoints-phone) {
+        padding: 8px;
+        font-size: 12px;
+      }
+    }
+
+    .single-day-buttons-container-desktop {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      [class^="back-button"] {
+        font-size: 16pt;
+        color: white;
+        border: none;
+        align-self: center;
+        padding: 10px 40px;
+        border-radius: 5px;
+
+        @media screen and (max-width: $breakpoints-phone) {
+          border-radius: 0;
+        }
+      }
+
+      .back-button-next,
+      .back-button-previous {
+        @media screen and (min-width: $breakpoints-phone) {
+          width: 200px;
+        }
+
+        @media screen and (max-width: $breakpoints-phone) {
+          flex: 1;
+          padding: 10px 0;
+        }
+      }
+
+      @media screen and (max-width: $breakpoints-phone) {
+        display: none;
+      }
+    }
+
+    .single-day-buttons-container-mobile {
+      overflow-x: scroll;
+      height: 48%;
+
+      .day-mobile-card {
+        &:not(-selected) {
+          background: none;
+        }
+      }
+
+      [class^="day-mobile-card"] {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        border: none;
+        font-size: 24px;
+        color: white;
+        align-items: center;
+
+        img {
+          padding: 0 10px;
+        }
+
+        .day-button-card {
+          flex: 1;
+          text-align: left;
+        }
+
+        .day-content-wrapper-mobile {
+          flex: 2;
+          display: flex;
+          justify-content: space-between;
+          padding-right: 7px;
+        }
+      }
+
+      @media screen and (min-width: $breakpoints-phone) {
+        display: none;
+      }
+    }
+
+    button {
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+}
+
+.hyrule {
+  &-day {
+    background: $green;
+
+    &:after {
+      background-image: url(/hyruleDay.jpg);
+
+      @media screen and (max-width: $breakpoints-phone) {
+        background-image: url(/hyruleDayMobile.jpg);
+      }
+    }
+
+    .header-container {
+      background-color: $light-green;
+    }
+
+    .back-button {
+      background: $dark-transparent-blue;
+
+      &:hover {
+        background: $dark-transparent-blue-darker;
+      }
+
+      &-previous,
+      &-next {
+        background: $light-green-transparent;
+
+        &:hover {
+          background: $transparent-black;
+        }
+      }
+    }
+
+    .day-mobile-card-selected {
+      background: $transparent-black-darker;
+    }
+
+
+    .weather-low-text {
+      color: $light-white;
+    }
+  }
+
+  &-night {
+    background: $almost-black;
+
+    &:after {
+      background-image: url(/hyruleNight.jpg);
+
+      @media screen and (max-width: $breakpoints-phone) {
+        background-image: url(/hyruleNightMobile.jpg);
+      }
+    }
+
+    .header-container {
+      background-color: $blue-dark;
+    }
+
+    .back-button {
+      background: $blue-dark-transparent;
+
+      &:hover {
+        background: $blue-dark-transparent-darker;
+      }
+
+      &-previous,
+      &-next {
+        background: $gray-darker-transparent;
+
+        &:hover {
+          background: $almost-black-transparent;
+        }
+      }
+    }
+
+    .day-mobile-card-selected {
+      background: $gray-flat-transparent;
+    }
+
+
+    .weather-low-text {
+      color: $off-white;
+    }
+  }
+}
+
+.mobile-hide {
+  @media screen and (max-width: $breakpoints-phone) {
+    display: none !important;
+  }
+}
+
+.desktop-hide {
+  @media screen and (min-width: $breakpoints-phone) {
+    display: none !important;
+  }
+}
