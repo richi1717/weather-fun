@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import '../../sass/style.scss';
+import '../sass/style.scss';
 
 function Header(props) {
   const style = {
