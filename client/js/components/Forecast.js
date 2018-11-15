@@ -41,7 +41,7 @@ export default class Forecast extends Component {
     // I could've used the city ID but I wanted to have room for the user to
     // Use different cities.  For now it just supports Phoenix.
     fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?q=${city.toLowerCase()},us&units=imperial&APPID=${
+      `https://api.openweathermap.org/data/2.5/forecast?q=${city.toLowerCase()},us&units=imperial&APPID=${
         process.env.WEATHER_API_KEY
       }`
     )
