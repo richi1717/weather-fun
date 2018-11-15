@@ -138,29 +138,24 @@ export default class Forecast extends Component {
       } = data;
       const { main: weatherMain, icon } = weather[0];
 
-      const time = new Date(dt_txt)
+      const time = new Date(`${dt_txt}`)
         .toLocaleTimeString('en-US')
         .replace(/:00:00 /, '');
+
       return (
-        <div>
-          Here is the issue: {time}
-          OR: {dt_txt}, OR: {`${new Date(dt_txt)}`}
-          OR: {new Date(dt_txt).toLocaleTimeString('en-US')}
+        <div key={`content-${idx}`} className="individual-day-display">
+          <h3>{time}</h3>
+          {new Date(`${dt_txt}`)}
+          <img
+            src={`http://openweathermap.org/img/w/${icon}.png`}
+            alt={`${weatherMain} weather icon`}
+          />
+          <p>
+            {Forecast.formatNumbers(temp)}
+            <sup>°</sup>
+          </p>
         </div>
       );
-      // return (
-      //   <div key={`content-${idx}`} className="individual-day-display">
-      //     <h3>{time}</h3>
-      //     <img
-      //       src={`http://openweathermap.org/img/w/${icon}.png`}
-      //       alt={`${weatherMain} weather icon`}
-      //     />
-      //     <p>
-      //       {Forecast.formatNumbers(temp)}
-      //       <sup>°</sup>
-      //     </p>
-      //   </div>
-      // );
     });
   }
 
