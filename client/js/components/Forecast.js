@@ -141,6 +141,7 @@ export default class Forecast extends Component {
       const time = new Date(dt_txt)
         .toLocaleTimeString('en-US')
         .replace(/:00:00 /, '');
+      console.log(time, 'here is the time');
       return (
         <div key={`content-${idx}`} className="individual-day-display">
           <h3>{time}</h3>
@@ -242,22 +243,21 @@ export default class Forecast extends Component {
 
   renderMobileOrDesktop() {
     const { organizedData, day, showDay } = this.state;
-    return <div>{day}{this.day}</div>
-    // const { previousDay, nextDay } = this.renderOtherDays(organizedData);
-    // const isMobile = window.innerWidth <= '500';
-    //
-    // if (isMobile) {
-    //   return (
-    //     <div className="forecast-wrapper" style={{ flexDirection: 'column' }}>
-    //       <h2 className="forecast-day-header">{day}</h2>
-    //       <div className="hourly-forecast-container">
-    //         {this.renderForecastPerDay(organizedData)}
-    //       </div>
-    //       <div className="single-day-buttons-container-mobile">
-    //         {this.renderMobileDays(organizedData)}
-    //       </div>
-    //     </div>
-    //   );
+    const { previousDay, nextDay } = this.renderOtherDays(organizedData);
+    const isMobile = window.innerWidth <= '500';
+
+    if (isMobile) {
+      return (
+        <div className="forecast-wrapper" style={{ flexDirection: 'column' }}>
+          <h2 className="forecast-day-header">{day}</h2>
+          <div className="hourly-forecast-container">
+            {this.renderForecastPerDay(organizedData)}
+          </div>
+          <div className="single-day-buttons-container-mobile">
+            {this.renderMobileDays(organizedData)}
+          </div>
+        </div>
+      );
     }
 
     return (
