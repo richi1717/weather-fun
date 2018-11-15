@@ -142,11 +142,12 @@ export default class Forecast extends Component {
         .toLocaleTimeString('en-US')
         .replace(/:00:00 /, '');
       return (
-        <div>Here is the issue: {time}
-        OR: {dt_txt},
-        OR: {new Date(dt_txt)}
-        OR: {new Date(dt_txt).toLocaleTimeString('en-US')}</div>
-      )
+        <div>
+          Here is the issue: {time}
+          OR: {dt_txt}, OR: {`${new Date(dt_txt)}`}
+          OR: {new Date(dt_txt).toLocaleTimeString('en-US')}
+        </div>
+      );
       // return (
       //   <div key={`content-${idx}`} className="individual-day-display">
       //     <h3>{time}</h3>
