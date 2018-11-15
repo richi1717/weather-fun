@@ -22,6 +22,17 @@ export default class Forecast extends Component {
     6: 'Saturday'
   };
 
+  hourConversion = {
+    '00': '12AM',
+    '03': '3AM',
+    '06': '6AM',
+    '09': '9AM',
+    '12': '12PM',
+    '15': '3PM',
+    '18': '6PM',
+    '21': '9PM'
+  };
+
   componentDidMount() {
     this.getForecastData('Phoenix');
   }
@@ -33,8 +44,9 @@ export default class Forecast extends Component {
       .then(response => response.json())
       .then(json => {
         window.showMe = json;
+        const formattedDate = json.list[0].dt_txt.replace(/\ \d{2}:\d{2}:\d{2}/, '');
         this.setState({
-          day: this.dayOfTheWeek[new Date(json.list[0].dt_txt).getDay()],
+          day: this.dayOfTheWeek[new Date(formattedDate).getDay()],
           organizedData: this.createDaysOfData(json.list),
           city
         });
@@ -67,12 +79,12 @@ export default class Forecast extends Component {
   };
 
   createDaysOfData(list) {
-    let date = this.dayOfTheWeek[new Date(list[0].dt_txt).getDay()];
+    let date = this.dayOfTheWeek[new Date(list[0].dt_txt.replace(/\ \d{2}:\d{2}:\d{2}/, '')).getDay()];
     const obj = {
       [date]: []
     };
     list.forEach(item => {
-      const currentDay = this.dayOfTheWeek[new Date(item.dt_txt).getDay()];
+      const currentDay = this.dayOfTheWeek[new Date(item.dt_txt.replace(/\ \d{2}:\d{2}:\d{2}/, '')).getDay()];
       if (currentDay === date) {
         obj[currentDay].push(item);
       } else {
@@ -138,14 +150,17 @@ export default class Forecast extends Component {
       } = data;
       const { main: weatherMain, icon } = weather[0];
 
-      const time = new Date(`${dt_txt}`)
-        .toLocaleTimeString('en-US')
-        .replace(/:00:00 /, '');
-
+      // Figure out how to use dt_txt as a regex
+      // console.log(dt_txt);
+      // const time = new Date(dt_txt)
+      //   .toLocaleTimeString('en-US')
+      //   .replace(/:00:00 /, '');
+      const time = this.hourConversion[
+        dt_txt.replace(/\d{4}-(\d{2})-\d{2}\ /, '').replace(/:00:00/, '')
+      ];
       return (
         <div key={`content-${idx}`} className="individual-day-display">
           <h3>{time}</h3>
-          {`${new Date(`${dt_txt}`)}`}
           <img
             src={`http://openweathermap.org/img/w/${icon}.png`}
             alt={`${weatherMain} weather icon`}
