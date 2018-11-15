@@ -242,21 +242,22 @@ export default class Forecast extends Component {
 
   renderMobileOrDesktop() {
     const { organizedData, day, showDay } = this.state;
-    const { previousDay, nextDay } = this.renderOtherDays(organizedData);
-    const isMobile = window.innerWidth <= '500';
-
-    if (isMobile) {
-      return (
-        <div className="forecast-wrapper" style={{ flexDirection: 'column' }}>
-          <h2 className="forecast-day-header">{day}</h2>
-          <div className="hourly-forecast-container">
-            {this.renderForecastPerDay(organizedData)}
-          </div>
-          <div className="single-day-buttons-container-mobile">
-            {this.renderMobileDays(organizedData)}
-          </div>
-        </div>
-      );
+    return <div>{day}{this.day}</div>
+    // const { previousDay, nextDay } = this.renderOtherDays(organizedData);
+    // const isMobile = window.innerWidth <= '500';
+    //
+    // if (isMobile) {
+    //   return (
+    //     <div className="forecast-wrapper" style={{ flexDirection: 'column' }}>
+    //       <h2 className="forecast-day-header">{day}</h2>
+    //       <div className="hourly-forecast-container">
+    //         {this.renderForecastPerDay(organizedData)}
+    //       </div>
+    //       <div className="single-day-buttons-container-mobile">
+    //         {this.renderMobileDays(organizedData)}
+    //       </div>
+    //     </div>
+    //   );
     }
 
     return (
