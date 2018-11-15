@@ -145,7 +145,7 @@ export default class Forecast extends Component {
       return (
         <div key={`content-${idx}`} className="individual-day-display">
           <h3>{time}</h3>
-          {new Date(`${dt_txt}`)}
+          {`${new Date(`${dt_txt}`)}`}
           <img
             src={`http://openweathermap.org/img/w/${icon}.png`}
             alt={`${weatherMain} weather icon`}
