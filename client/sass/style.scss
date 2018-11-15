@@ -24,6 +24,11 @@ $breakpoints-tablet: 768px;
 $breakpoints-desktop: 1024px;
 $font-size: 16px;
 $font-weight-normal: 300;
+$url-path-for-images: '';
+
+@function build-url($args) {
+  @return url('#{$url-path-for-images}#{$args}');
+}
 
 // Styles
 [class^="hyrule"] {
@@ -293,10 +298,10 @@ $font-weight-normal: 300;
     background: $green;
 
     &:after {
-      background-image: url(/hyruleDay.jpg);
+      background-image: build-url('/hyruleDay.jpg');
 
       @media screen and (max-width: $breakpoints-phone) {
-        background-image: url(/hyruleDayMobile.jpg);
+        background-image: build-url('/hyruleDayMobile.jpg');
       }
     }
 
@@ -335,10 +340,10 @@ $font-weight-normal: 300;
     background: $almost-black;
 
     &:after {
-      background-image: url(/hyruleNight.jpg);
+      background-image: build-url('/hyruleNight.jpg');
 
       @media screen and (max-width: $breakpoints-phone) {
-        background-image: url(/hyruleNightMobile.jpg);
+        background-image: build-url('/hyruleNightMobile.jpg');
       }
     }
 

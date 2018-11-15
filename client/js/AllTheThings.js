@@ -1,9 +1,13 @@
-import React from 'react';
+// For using in jsFiddle, comment out these next 3 lines
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-
 import '../sass/style.scss';
 
+if (!window.process) {
+  window.process = {};
+  process.env = {};
+  process.env.WEATHER_API_KEY = '2b07eb79e75f25c3f2d9b46b33061a82';
+}
 function Header(props) {
   const style = {
     display: 'flex',
@@ -52,11 +56,6 @@ function Header(props) {
   );
 }
 
-Header.propTypes = {
-  updateTheme: PropTypes.func.isRequired,
-  updatePage: PropTypes.func.isRequired
-};
-
 class Weather extends React.Component {
   static formatNumbers(number) {
     return Math.round(number);
@@ -78,6 +77,8 @@ class Weather extends React.Component {
   }
 
   getWeatherData(city) {
+    // I could've used the city ID but I wanted to have room for the user to
+    // Use different cities.  For now it just supports Phoenix.
     fetch(
       `http://api.openweathermap.org/data/2.5/weather?q=${city.toLowerCase()},us&units=imperial&APPID=${process.env.WEATHER_API_KEY}`
     )
@@ -169,19 +170,38 @@ class Forecast extends React.Component {
     6: 'Saturday'
   };
 
+  hourConversion = {
+    '00': '12AM',
+    '03': '3AM',
+    '06': '6AM',
+    '09': '9AM',
+    '12': '12PM',
+    '15': '3PM',
+    '18': '6PM',
+    '21': '9PM'
+  };
+
   componentDidMount() {
     this.getForecastData('Phoenix');
   }
 
   getForecastData(city) {
+    // I could've used the city ID but I wanted to have room for the user to
+    // Use different cities.  For now it just supports Phoenix.
     fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?q=${city.toLowerCase()},us&units=imperial&APPID=${process.env.WEATHER_API_KEY}`
+      `http://api.openweathermap.org/data/2.5/forecast?q=${city.toLowerCase()},us&units=imperial&APPID=${
+        process.env.WEATHER_API_KEY
+        }`
     )
       .then(response => response.json())
       .then(json => {
         window.showMe = json;
+        const formattedDate = json.list[0].dt_txt.replace(
+          /\ \d{2}:\d{2}:\d{2}/,
+          ''
+        );
         this.setState({
-          day: this.dayOfTheWeek[new Date(json.list[0].dt_txt).getDay()],
+          day: this.dayOfTheWeek[new Date(formattedDate).getDay()],
           organizedData: this.createDaysOfData(json.list),
           city
         });
@@ -214,12 +234,16 @@ class Forecast extends React.Component {
   };
 
   createDaysOfData(list) {
-    let date = this.dayOfTheWeek[new Date(list[0].dt_txt).getDay()];
+    let date = this.dayOfTheWeek[
+      new Date(list[0].dt_txt.replace(/ \d{2}:\d{2}:\d{2}/, '')).getDay()
+      ];
     const obj = {
       [date]: []
     };
     list.forEach(item => {
-      const currentDay = this.dayOfTheWeek[new Date(item.dt_txt).getDay()];
+      const currentDay = this.dayOfTheWeek[
+        new Date(item.dt_txt.replace(/ \d{2}:\d{2}:\d{2}/, '')).getDay()
+        ];
       if (currentDay === date) {
         obj[currentDay].push(item);
       } else {
@@ -285,9 +309,9 @@ class Forecast extends React.Component {
       } = data;
       const { main: weatherMain, icon } = weather[0];
 
-      const time = new Date(dt_txt)
-        .toLocaleTimeString('en-US')
-        .replace(/:00:00 /, '');
+      const time = this.hourConversion[
+        dt_txt.replace(/\d{4}-(\d{2})-\d{2} /, '').replace(/:00:00/, '')
+        ];
       return (
         <div key={`content-${idx}`} className="individual-day-display">
           <h3>{time}</h3>
@@ -338,7 +362,7 @@ class Forecast extends React.Component {
         <button
           className={`day-mobile-card${
             list === this.state.day ? '-selected' : ''
-          }`}
+            }`}
           key={`content-${idx}`}
           onClick={this.handleClick(list)}
           type="button"
@@ -443,20 +467,13 @@ class Forecast extends React.Component {
   }
 }
 
-class App extends React.Component {
-  static updateTheme(bool) {
-    if (bool) {
-      document.body.className = 'hyrule-night';
-    } else {
-      document.body.className = 'hyrule-day';
-    }
-  }
 
+class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      weather: false
+      weather: true
     };
 
     this.updatePage = this.updatePage.bind(this);
@@ -464,6 +481,14 @@ class App extends React.Component {
 
   componentDidMount() {
     document.body.className = 'hyrule-night';
+  }
+
+  static updateTheme(bool) {
+    if (bool) {
+      document.body.className = 'hyrule-night';
+    } else {
+      document.body.className = 'hyrule-day';
+    }
   }
 
   updatePage(bool) {
